@@ -2,6 +2,15 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "C:\\Users\\Ula\\source\\repos\\mgugt\\Auction.WebApi"
+		},
+		{
+			"path": "C:\\Users\\Ula\\source\\repos\\mgugt\\integration"
+		},
+		{
+			"path": "C:\\Users\\Ula\\source\\repos\\Auction.WebApi\\Auction.WebApi"
 		}
 	],
 	"settings": {}
