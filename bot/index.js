@@ -18,27 +18,14 @@ var chatId = 68104629;
 bot.on('callback_query', (ctx) => {
     var response = ctx.update.callback_query.data;
 
-    if (response == "Ok") {
-        ctx.reply('Доставка подтверждена');
-    } else {
+    if (response == "No"){
         ctx.reply('Доставка отменена');
-    }
-    
-    ctx.answerCbQuery()
-});
-
-bot.on('text', (ctx) => {
-        chatId =  ctx.message.chat.id;
-
-        var code = ctx.message.text;
-
-        console.log(code);
-
-        ctx.reply('Код ' + code + ' принят, средства переведены продавцу');
+    } else {
+        console.log(response);
 
         var options = {
             host: 'localhost',
-            path: '/Auction/savecode/' + code,
+            path: '/Auction/savecode/' + response,
             port: 8014,
             method: 'POST'
         };
@@ -59,6 +46,21 @@ bot.on('text', (ctx) => {
         
         req.write("");
         req.end();
+
+        ctx.reply('Доставка подтверждена');
+    }
+    
+    ctx.answerCbQuery()
+});
+
+bot.on('text', (ctx) => {
+        chatId =  ctx.message.chat.id;
+
+        var code = ctx.message.text;
+
+        console.log(code);
+
+        ctx.reply('Только по вызову');
     }
 );
 
@@ -69,8 +71,8 @@ http.createServer(function (req, res) {
         bot.telegram.sendMessage(chatId, "Новый контракт на подтверждение: " + url, {
             reply_markup:{
                 inline_keyboard: [[
-                    {text: 'Подтвердить 👍', callback_data: 'Ok'},
-                    {text: '👎🏿 Отклонить', callback_data: 'No'}
+                    { text: 'Подтвердить 👍', callback_data: url },
+                    { text: '👎🏿 Отклонить', callback_data: 'No' }
                 ]]
             }
         });
