@@ -85,7 +85,8 @@ angular.module('app', [])
         }
 
         function getUserBalance(user) {
-            return waves.balance(user.wallet)
+            // return waves.balance(user.wallet)
+            return Promise.resolve(100)
                 .then(balance => $timeout(function() {
                     user.balance = balance / factor;
                 }, 0));
