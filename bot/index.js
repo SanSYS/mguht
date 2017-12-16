@@ -13,7 +13,23 @@ bot.use((ctx, next) => {
   })
 });
 
+var chatId = 68104629;
+
+bot.on('callback_query', (ctx) => {
+    var response = ctx.update.callback_query.data;
+
+    if (response == "Ok") {
+        ctx.reply('Доставка подтверждена');
+    } else {
+        ctx.reply('Доставка отменена');
+    }
+    
+    ctx.answerCbQuery()
+});
+
 bot.on('text', (ctx) => {
+        chatId =  ctx.message.chat.id;
+
         var code = ctx.message.text;
 
         console.log(code);
@@ -45,5 +61,23 @@ bot.on('text', (ctx) => {
         req.end();
     }
 );
+
+http.createServer(function (req, res) {
+    var url = req.url;
+
+    if (url != "/favicon.ico") {
+        bot.telegram.sendMessage(chatId, "Новый контракт на подтверждение: " + url, {
+            reply_markup:{
+                inline_keyboard: [[
+                    {text: 'Подтвердить 👍', callback_data: 'Ok'},
+                    {text: '👎🏿 Отклонить', callback_data: 'No'}
+                ]]
+            }
+        });
+        res.write('ok');
+    }
+
+    res.end();
+}).listen(8080);
 
 bot.startPolling();
