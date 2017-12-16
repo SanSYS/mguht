@@ -1,0 +1,21 @@
+version: '2.3'
+services:
+  ethereum:
+    build: ./eth
+    ports: 
+      - "30303:30303"
+      - "8000:8000"
+      - "8545:8545"
+    networks:
+      ethereum:
+        ipv4_address: 172.19.0.2
+
+networks:
+  ethereum:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        - subnet: "2402:9400:1000:7::/64"
+        - subnet: 172.19.0.0/24
