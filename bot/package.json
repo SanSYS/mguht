@@ -1,0 +1,53 @@
+{
+  "requires": true,
+  "lockfileVersion": 1,
+  "dependencies": {
+    "debug": {
+      "integrity": "sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==",
+      "requires": {
+        "ms": "2.0.0"
+      },
+      "resolved": "https://registry.npmjs.org/debug/-/debug-3.1.0.tgz",
+      "version": "3.1.0"
+    },
+    "encoding": {
+      "integrity": "sha1-U4tm8+5izRq1HsMjgp0flIDHS+s=",
+      "requires": {
+        "iconv-lite": "0.4.19"
+      },
+      "resolved": "https://registry.npmjs.org/encoding/-/encoding-0.1.12.tgz",
+      "version": "0.1.12"
+    },
+    "http": "0.0.0",
+    "iconv-lite": {
+      "integrity": "sha512-oTZqweIP51xaGPI4uPa56/Pri/480R+mo7SeU+YETByQNhDG55ycFyNLIgta9vXhILrxXDmF7ZGhqZIcuN0gJQ==",
+      "resolved": "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.19.tgz",
+      "version": "0.4.19"
+    },
+    "is-stream": {
+      "integrity": "sha1-EtSj3U5o4Lec6428hBc66A2RykQ=",
+      "resolved": "https://registry.npmjs.org/is-stream/-/is-stream-1.1.0.tgz",
+      "version": "1.1.0"
+    },
+    "ms": {
+      "integrity": "sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g=",
+      "resolved": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
+      "version": "2.0.0"
+    },
+    "node-fetch": {
+      "integrity": "sha512-NhZ4CsKx7cYm2vSrBAr2PvFOe6sWDf0UYLRqA6svUYg7+/TSfVAu49jYC4BvQ4Sms9SZgdqGBgroqfDhJdTyKQ==",
+      "requires": {
+        "encoding": "0.1.12",
+        "is-stream": "1.1.0"
+      },
+      "resolved": "https://registry.npmjs.org/node-fetch/-/node-fetch-1.7.3.tgz",
+      "version": "1.7.3"
+    },
+    "sandwich-stream": {
+      "integrity": "sha1-eDDkV5e1kzKH8fmyj4cZB0ViYvI=",
+      "resolved": "https://registry.npmjs.org/sandwich-stream/-/sandwich-stream-1.0.0.tgz",
+      "version": "1.0.0"
+    },
+    "telegraf": "^3.17.2"
+  }
+}
