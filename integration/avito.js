@@ -94,14 +94,64 @@ function integrate() {
           .text('Успешно');
       });
 
-      transaction(tx.from, tx.to, 0.1)
-        .then(c => console.dir(c));
+      // transaction(tx.from, tx.to, 0.1)
+      //   .then(c => {
+      //     console.dir(c);
+      //   });
 
       initContract(tx.from)
         .then(contract => {
           console.log(contract);
+          return api('Auction/contract/' + contract.address, null, 'GET')
+            .then(_ => contract);
+        })
+        .then(contract => {
+          btn
+            .css('background', 'rgb(221, 167, 119)')
+            .text('В доставке');
+          return contract;
+        })
+        .then(contract => {
+          return new Promise(function(resolve, resolve) {
 
-        });
+            var id = 0;
+
+            function checkstatus() {
+                    // классический подход
+                  var request = new XMLHttpRequest();
+
+                  request.open('GET', apiUrl + '/Auction/savecode/' + contract.address, true);
+                  request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+                  request.onload = function (e) {
+                      if (request.readyState === 4) {
+                        if (request.status === 200) {
+                              if (request.responseText != 'true')
+                              {
+                                id = setTimeout(checkstatus, 1000);
+                              } else {
+                                // resolve(contract);
+                                btn.css('background', 'rgb(167, 221, 119)').text('Доставлено!')
+                              }
+                          } else {
+                              console.error(request.statusText);
+                          }
+                      }
+                  };
+
+                  request.onerror = function (e) {
+                      console.error(request.statusText);
+                  };
+
+                  request.send('html=response+from+XMLHttpRequest&delay=1');
+            };
+            checkstatus();
+
+            // id = setTimeout(checkstatus, 1000);
+
+          });
+        })
+        // .then(contr => btn.css('background', 'rgb(167, 221, 119)').text('Доставлено!'));
 
       // console.log(btn, 'Дёргай етериум');
     });
@@ -173,7 +223,7 @@ function integrate() {
       ];
       var orderContract = web3.eth.contract([{"constant":false,"inputs":[{"name":"num","type":"string"}],"name":"Confirm","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"num","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]);
       var order = orderContract.new(
-        '12313',
+        '2',
         {
           from,
           data: '0x6060604052341561000f57600080fd5b60405161032338038061032383398101604052808051820191905050336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055508060019080519060200190610081929190610088565b505061012d565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106100c957805160ff19168380011785556100f7565b828001600101855582156100f7579182015b828111156100f65782518255916020019190600101906100db565b5b5090506101049190610108565b5090565b61012a91905b8082111561012657600081600090555060010161010e565b5090565b90565b6101e78061013c6000396000f300606060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680639f28e48414610046575b600080fd5b341561005157600080fd5b6100a1600480803590602001908201803590602001908080601f016020809104026020016040519081016040528093929190818152602001838380828437820191505050505050919050506100a3565b005b806040518082805190602001908083835b6020831015156100d957805182526020820191506020810190506020830392506100b4565b6001836020036101000a038019825116818451168082178552505050505050905001915050604051809103902060001916600160405180828054600181600116156101000203166002900480156101675780601f10610145576101008083540402835291820191610167565b820191906000526020600020905b815481529060010190602001808311610153575b505091505060405180910390206000191614156101b8576000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16ff5b505600a165627a7a7230582097980eb968ba25e2c98c9b15f56a2cbdaeb8a739d71a3e2fd47cd590c4ef257c0029',
@@ -188,20 +238,22 @@ function integrate() {
       });
     }
 
-    function api(path, data) {
+    function api(path, data, method = "POST") {
       return new Promise(function(resolve, reject) {
+        // console.log('api request go: ' + path);
         $.ajax({
           url : apiUrl + '/' + path,
           data,
-          type: "POST",
-          success: r => {
-            console.log('api request result');
-            console.dir(r);
+          type: method,
+          complete: r => {
+            // console.log('api request result: ' + path);
+            // console.dir(r);
             resolve(r);
           },
           dataType: "application/json"
         });
       });
     }
+
   }
 };
