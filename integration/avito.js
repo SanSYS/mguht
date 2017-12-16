@@ -59,10 +59,21 @@ function integrate() {
           pass: password
         };
 
+        console.log('api')
         // https://cbe97c02.ngrok.io/Auction/send
-        $.post(apiUrl + 'Auction/send', tx).then(r => console.dir(r))
+        $.ajax({
+          url : apiUrl + 'Auction/send',
+          data: tx,
+          type: "POST",
+          success: r => {
+            console.log('result');
+            console.dir(r);
+          },
+          dataType: "application/json"
+        });
 
       }
+      // transaction(accounts[0], accounts[1], web3.toWei('0.1', 'ether'));
       // {"amount":1, "from":"0x09374b1c383f75be7cb0c7693c0cad7ff93a3ef8", "to":"0x9E592A53506e0711F462406729Ce59164D911F06", "pass":"1"}
 
       var coinbase = web3.eth.coinbase;
