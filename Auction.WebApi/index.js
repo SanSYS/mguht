@@ -9,7 +9,7 @@ WavesAPI.TESTNET_CONFIG.matcherAddress = host.matcher;
 const Waves = WavesAPI.create(WavesAPI.TESTNET_CONFIG);
 
 var factor = 100000000;
-var api = 'https://cbe97c02.ngrok.io';//'http://localhost:8014';
+var api = 'https://2558d94c.ngrok.io';  //'http://localhost:8014';
 var getUsersUrl = api + '/Auction/users ';
 var getLotsUrl = api + '/Auction/lots';
 var makeaBetUrl = api + '/Auction/bets';
@@ -95,12 +95,10 @@ angular.module('app', [])
             $scope.loading = true;
             let user = $scope.activeUser;
             if (user.balance > 0) {
-                waves.transfer(amount * factor, user.wallet, auction)
-                    .then(transaction => {
-                        console.log('ok', transaction);
-                        return callApi(amount, lotId, transaction)
-                            .then(_ => getUserBalance(user));
-                    })
+
+                callApi(amount, lotId, transaction)
+                            .then(_ => getUserBalance(user)) //;
+                    // })
                     .catch(data => {
                         console.log('no!', data);
                     })
